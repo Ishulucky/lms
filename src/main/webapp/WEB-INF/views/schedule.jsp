@@ -28,7 +28,7 @@
         onclick="createEmiScheduleTable()">Generate Schedule</button>
     <p id="emiResult"></p>
 
-    <div id="emi-schedule-container"></div>
+    <div id="scheduleDiv"></div>
 
     <script>
         function calculateEMI() {
@@ -52,8 +52,8 @@
             const emi = parseFloat(document.getElementById('emiResult').textContent.split(': ')[1]);
             
             // Clear previous content in the container
-            const tableContainer = document.getElementById('emi-schedule-container');
-            tableContainer.innerHTML = '';
+            const emitable = document.getElementById('scheduleDiv');
+            emitable.innerHTML = '';
 
             // Create a table element
             const table = document.createElement('table');
@@ -87,8 +87,8 @@
                 currentDate.setMonth(currentDate.getMonth() + 1);
             }
 
-            // Append the table to the container
-            tableContainer.appendChild(table);
+            
+            emitable.appendChild(table);
         }
     </script>
 </body>
