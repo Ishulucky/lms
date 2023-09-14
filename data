@@ -1,0 +1,103 @@
+CREATE TABLE InsurancePackages
+(
+    insp_id  serial primary key,
+    insp_title VARCHAR(60),
+    insp_status CHAR(2),
+    insp_cdate DATE
+);
+
+
+CREATE TABLE NetworkHospitals 
+(
+    hosp_id INT primary key,
+    hosp_title VARCHAR(70),
+    hosp_location VARCHAR(50),
+    hosp_address VARCHAR(100),
+    hosp_contactmobile BIGINT(10),
+    hosp_contactphone BIGINT(10),
+    hosp_pincode INT(6),
+    hosp_luudate DATE,
+    hosp_luuser INT
+);
+
+CREATE TABLE sai_customers (
+    cust_id INT,
+    cust_fname VARCHAR(50),
+    cust_lname VARCHAR(50),
+    cust_dob DATE,
+    cust_address VARCHAR(255),
+    cust_gender CHAR(1),
+    cust_cdate DATE,
+    cust_aadhar BIGINT,
+    cust_status CHAR(2),
+    cust_luudate DATE,
+    cust_luuser INT
+);
+
+insert into sai_customers values(1,'sai','kiran','2000-04-01','vizag','m','2023-09-14','349846905273','a')
+
+
+
+CREATE TABLE Users (
+    user_id INT,
+    user_name VARCHAR(100),
+    user_cdate DATE,
+    user_pwd VARCHAR(100),
+    user_type CHAR(4),
+    user_status CHAR(2)
+);
+
+CREATE TABLE Diseases (
+    disc_id INT,
+    disc_name VARCHAR(100),
+    disc_icdcode VARCHAR(10),
+    disc_desc VARCHAR(255),
+    disc_status CHAR(2)
+);
+
+CREATE TABLE sai_InsurancePackages (
+    insp_id serial,
+    insp_title VARCHAR(60),
+    insp_desc VARCHAR(255),
+    insp_status CHAR(2),
+    insp_range_start NUMERIC,
+    insp_range_end NUMERIC,
+    insp_agelimit_start INT,
+    insp_agelimit_end INT
+);
+
+INSERT INTO sai_InsurancePackages (insp_title, insp_desc, insp_status, insp_range_start, insp_range_end, insp_agelimit_start, insp_agelimit_end)
+VALUES
+    ('Insurance Package 1', 'Description 1', 'A', 1000, 5000, 18, 65),
+    ('Insurance Package 2', 'Description 2', 'A', 2000, 8000, 20, 70),
+    ('Insurance Package 3', 'Description 3', 'A', 1500, 6000, 22, 75),
+    ('Insurance Package 4', 'Description 4', 'A', 1200, 5500, 19, 68),
+    ('Insurance Package 5', 'Description 5', 'A', 1800, 7000, 21, 72),
+    ('Insurance Package 6', 'Description 6', 'A', 1300, 5800, 23, 77),
+    ('Insurance Package 7', 'Description 7', 'A', 1100, 5200, 20, 69),
+    ('Insurance Package 8', 'Description 8', 'A', 1700, 6800, 24, 80),
+    ('Insurance Package 9', 'Description 9', 'A', 1400, 5600, 18, 67),
+    ('Insurance Package 10', 'Description 10', 'A', 1600, 6500, 22, 74);
+
+
+CREATE TABLE InsurancePackageCoveredDiseases (
+    insp_id INT,
+    disc_id INT,
+    PRIMARY KEY (insp_id, disc_id),
+    FOREIGN KEY (insp_id) REFERENCES InsurancePackages(insp_id),
+    FOREIGN KEY (disc_id) REFERENCES Diseases(disc_id)
+);
+
+
+CREATE TABLE Insurance (
+    insr_id INT PRIMARY KEY,
+    insr_cust_id INT,
+    insr_cdate DATE,
+    insr_sum_assured NUMERIC,
+    insr_insp_id INT,
+    insr_yrly_prem_amount NUMERIC,
+    insr_stdate DATE,
+    FOREIGN KEY (insr_cust_id) REFERENCES Customers(cust_id),
+    FOREIGN KEY (insr_insp_id) REFERENCES InsurancePackages(insp_id)
+);
+
