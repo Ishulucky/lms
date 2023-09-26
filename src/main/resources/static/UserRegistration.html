@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User Registration</title>
+<!-- jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+  <!-- jQuery Form Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+</head>
+<body>
+        <h2>Insert Record</h2>
+    <form id="insertRecordForm">
+        <label for="userId">User ID:</label>
+        <input type="number" id="userId" name="userId" ><br><br>
+        
+        <label for="userName">User Name:</label>
+        <input type="text" id="userName" name="userName" required><br><br>
+
+        <label for="userCDate">User Creation Date:</label>
+        <input type="date" id="userCDate" name="userCDate" required><br><br>
+
+        <label for="userPwd">User Password:</label>
+        <input type="password" id="userPwd" name="userPwd" required><br><br>
+
+        <label for="userType">User Type:</label>
+        <input type="text" id="userType" name="userType" required><br><br>
+
+        <label for="userStatus">User Status:</label>
+        <input type="text" id="userStatus" name="userStatus" required><br><br>
+
+        <input type="submit" value="Insert Record">
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#insertRecordForm').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Serialize form data to JSON
+                var formData = JSON.stringify({
+                    userId: $('#userId').val(),
+                    userName: $('#userName').val(),
+                    userCDate: $('#userCDate').val(),
+                    userPwd: $('#userPwd').val(),
+                    userType: $('#userType').val(),
+                    userStatus: $('#userStatus').val()
+                });
+
+                // Send a POST request to your server to insert the record
+                $.ajax({
+                    type: 'POST',
+                    url: '/insert', // Replace with your server endpoint
+                    contentType: 'application/json',
+                    data: formData,
+                    success: function(response) {
+                        // Handle success, e.g., show a success message
+                        alert('Record inserted successfully!');
+                        window.location.href = "Policy.html";
+                    },
+                    error: function(error) {
+                        // Handle error, e.g., show an error message
+                        console.log('Error inserting record: ' + error.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

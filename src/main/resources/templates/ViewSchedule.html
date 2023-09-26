@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insurance Policy Schedules</title>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <h1>Insurance Policy Schedules</h1>
+    <table id="insurancePolicyScheduleTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Policy ID</th>
+                <th>Schedule Index</th>
+                <th>Schedule Date</th>
+                <th>Premium Amount</th>
+                <th>Paid Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Use Thymeleaf syntax for data binding -->
+            <tr th:each="schedule : ${schedules}">
+                <td th:text="${schedule.iplcId}"></td>
+                <td th:text="${schedule.iplcSindex}"></td>
+                <td th:text="${schedule.iplcDate}"></td>
+                <td th:text="${schedule.iplcPremium}"></td>
+                <td th:text="${schedule.iplcPaidDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

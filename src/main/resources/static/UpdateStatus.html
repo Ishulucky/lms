@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Insurance Policy List</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h2>Insurance Policy List</h2>
+			</div>
+		</div>
+		<div class="row table-container">
+			<div class="col-md-12">
+				<table class="table table-bordered" id="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Customer ID</th>
+							<th>Creation Date</th>
+							<th>Sum Assured</th>
+							<th>Applicable Date</th>
+							<th>No of members Insured</th>
+							<th>Insurance package ID</th>
+							<th>Yearly Premium Amount</th>
+							<th>Payment Mode Count</th>
+							<th>Expiration Date</th>
+							<th>Agent ID</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody id="tableBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Display Policies
+		function displayPolicies() {
+			$
+					.ajax({
+						type : "GET",
+						url : "/policy",
+						dataType : 'json',
+						success : function(data) {
+							var output = '';
+							for (var i = 0; i < data.length; i++) {
+								output += '<tr>';
+								output += '<td>' + data[i].iplc_id + '</td>';
+								output += '<td>' + data[i].iplc_cust_id
+										+ '</td>';
+								output += '<td>' + data[i].iplc_cdate + '</td>';
+								output += '<td>' + data[i].iplc_sum_assured
+										+ '</td>';
+								output += '<td>' + data[i].iplc_applicable_date
+										+ '</td>';
+								output += '<td>' + data[i].iplc_nom_insured
+										+ '</td>';
+								output += '<td>' + data[i].iplc_insp_id
+										+ '</td>';
+								output += '<td>'
+										+ data[i].iplc_yrly_prem_amount
+										+ '</td>';
+								output += '<td>' + data[i].iplc_paymode_count
+										+ '</td>';
+								output += '<td>' + data[i].iplc_expdate
+										+ '</td>';
+								output += '<td>' + data[i].iplc_agnt_id
+										+ '</td>';
+								output += '<td>' + data[i].iplc_status
+										+ '</td>'; // New column
+								output += '<td><button type="button" class="btn btn-warning custom-button" onclick="editPolicy('
+										+ data[i].iplc_id
+										+ ', \'approved\')">Approve</button>';
+								output += '<button type="button" class="btn btn-danger custom-button" onclick="editPolicy('
+										+ data[i].iplc_id
+										+ ', \'cancelled\')">Cancel</button></td>';
+								output += '</tr>';
+							}
+							$("#tableBody").html(output);
+						},
+						error : function(error) {
+							alert("Error retrieving policies: "
+									+ error.responseText);
+						}
+					});
+		}
+
+		function editPolicy(id, status) {
+			console.log(id + "----" + status);
+			// Ask for confirmation before updating the status
+			if (confirm("Are you sure you want to update the status?")) {
+				var policyData = {
+					iplc_id : id,
+					iplc_status : status
+				};
+
+				$.ajax({
+					type : "PUT",
+					contentType : "application/json",
+					url : "/updatepolicy",
+					data : JSON.stringify(policyData),
+					dataType : 'json',
+					success : function(data) {
+						alert("Policy updated successfully");
+						location.reload();
+					},
+					error : function(error) {
+						alert("Error updating policy: " + error.responseText);
+						console.log("Error updating policy: "
+								+ error.responseText);
+						location.reload();
+					}
+				});
+			}
+		}
+
+		// Initial call to display policies
+		displayPolicies();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DataTables Example</title>
+
+  <!-- jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+  <!-- jQuery Form Plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+</head>
+<body>
+
+
+<h2>Update Password</h2>
+    <form id="updatePasswordForm">
+        <label for="userName">userName:</label>
+        <input type="text" id="userName" name="userName" required><br><br>
+        
+        <label for="userPwd">New Password:</label>
+        <input type="password" id="userPwd" name="userPwd" required><br><br>
+
+        <input type="submit" value="Update Password">
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#updatePasswordForm').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Serialize form data to JSON
+                var formData = JSON.stringify({
+                    userName: $('#userName').val(),
+                    userPwd: $('#userPwd').val()
+                });
+
+                // Send a PUT request to your server to update the password
+                $.ajax({
+                    type: 'PUT',
+                    url: '/update', // Replace with your server endpoint
+                    contentType: 'application/json',
+                    data: formData,
+                    success: function(response) {
+                        // Handle success, e.g., show a success message
+                        alert('Password updated successfully!');
+                        window.location.href = "UserRegistration.html";
+                    },
+                    error: function(error) {
+                       
+                        console.log('Error updating password: ' + error.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

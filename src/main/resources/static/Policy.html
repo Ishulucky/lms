@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insurance Policies</title>
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<h1>Insurance Policies</h1>
+<table id="insurancePolicyTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+             <th>ID</th>
+            <th>Customer ID</th>
+            <th>Creation Date</th>
+            <th>Sum Assured</th>
+            <th>Applicable Date</th>
+            <th>No of members Insured</th>
+            <th>Insurance package ID</th>
+            <th>Yearly Premium Amount</th>
+            <th>Payment Mode Count</th>
+            <th>Expiration Date</th>
+            <th>Agent ID</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "/policy", // Replace with the actual endpoint URL to fetch insurance policies
+            method: "GET", // Use the appropriate HTTP method (GET, POST, etc.) for your controller
+            dataType: "json", // Expect JSON data in the response
+            success: function(data) {
+                // Initialize DataTables once you have received the data
+                $('#insurancePolicyTable').DataTable({
+                    data: data, // Pass the received data to DataTables
+                    columns: [
+                        { data: 'iplc_id' },
+                        { data: 'iplc_cust_id' },
+                        { data: 'iplc_cdate' },
+                        { data: 'iplc_sum_assured' },
+                        { data: 'iplc_applicable_date' },
+                        { data: 'iplc_nom_insured' },
+                        { data: 'iplc_insp_id' },
+                        { data: 'iplc_yrly_prem_amount' },
+                        { data: 'iplc_paymode_count' },
+                        { data: 'iplc_expdate' },
+                        { data: 'iplc_agnt_id' },
+                        { data: 'iplc_status' }
+                    ]
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching data:", status, error);
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insurance Policy Registration</title>
+    <!-- Add your CSS styles or external CSS links here if needed -->
+</head>
+<body>
+    <h2>Insert Insurance Policy Record</h2>
+    <form id="insertPolicyForm">
+    <label for="<label for="iplcId">Customer ID:</label>
+        <input type="number" id="iplcId" name="iplcId" required><br><br>"> ID:</label>
+        <input type="number" id="iplcCustId" name="iplcCustId" required><br><br>
+        
+        <label for="iplcCustId">Customer ID:</label>
+        <input type="number" id="iplcCustId" name="iplcCustId" required><br><br>
+        
+        <label for="iplcCdate">Policy Creation Date:</label>
+        <input type="date" id="iplcCdate" name="iplcCdate" required><br><br>
+
+        <label for="iplcSumAssured">Sum Assured:</label>
+        <input type="number" step="0.01" id="iplcSumAssured" name="iplcSumAssured" required><br><br>
+
+        <label for="iplcApplicableDate">Applicable Date:</label>
+        <input type="date" id="iplcApplicableDate" name="iplcApplicableDate" required><br><br>
+
+        <label for="iplcInspId">Insurance Package ID:</label>
+        <input type="number" id="iplcInspId" name="iplcInspId" required><br><br>
+
+        <label for="iplcYrlyPremAmount">Yearly Premium Amount:</label>
+        <input type="number" step="0.01" id="iplcYrlyPremAmount" name="iplcYrlyPremAmount" required><br><br>
+
+        <label for="iplcExpdate">Policy Expiry Date:</label>
+        <input type="date" id="iplcExpdate" name="iplcExpdate" required><br><br>
+
+        <label for="iplcAgntId">Agent ID:</label>
+        <input type="number" id="iplcAgntId" name="iplcAgntId" required><br><br>
+
+        <input type="submit" value="Insert Policy Record">
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#insertPolicyForm').submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Serialize form data to JSON
+                var formData = JSON.stringify({
+                	iplcId: $('#iplcId').val(),
+                    iplcCustId: $('#iplcCustId').val(),
+                    iplcCdate: $('#iplcCdate').val(),
+                    iplcSumAssured: $('#iplcSumAssured').val(),
+                    iplcApplicableDate: $('#iplcApplicableDate').val(),
+                    iplcInspId: $('#iplcInspId').val(),
+                    iplcYrlyPremAmount: $('#iplcYrlyPremAmount').val(),
+                    iplcExpdate: $('#iplcExpdate').val(),
+                    iplcAgntId: $('#iplcAgntId').val()
+                });
+
+                // Send a POST request to your server to insert the policy record
+                $.ajax({
+                    type: 'POST',
+                    url: '/createpolicy', // Replace with your server endpoint
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+
+                        alert('Policy record inserted successfully!');
+                        window.location.href = "Policy.html";
+                    },
+                    error: function(error) {
+                        // Handle error, e.g., show an error message
+                        console.log('Error inserting policy record: ' + error.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
